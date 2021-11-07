@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <fstream>
 
+#include <memory>
+
 // Delta time
 #include "Timestep.h"
 

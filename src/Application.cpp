@@ -24,9 +24,9 @@ namespace ProtOS
       assert(m_Matrix);
 
       m_Face = new Screen();
-      assert(m_Face->LoadConfig("./config/faces.json"));
+      assert(m_Face->LoadConfig("./config/booting.json"));
 
-      m_Face->SetScreenInfo("mango");
+      m_Face->SetScreenInfo("booting");
     }
 
     Application::~Application() {

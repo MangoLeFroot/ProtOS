@@ -16,6 +16,6 @@ namespace ProtOS {
 
     private:
         nlohmann::json m_Config;
-        std::vector<IScreenType*> m_Screens;
+        std::vector<std::unique_ptr<IScreenType>> m_Screens;
     };
 }

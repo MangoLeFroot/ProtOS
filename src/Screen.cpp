@@ -10,7 +10,6 @@ namespace ProtOS {
     
     Screen::~Screen() {
         // Clear out the m_Screens
-        for(auto& screen : m_Screens) delete screen;
         m_Screens.clear();
     }
 
@@ -40,15 +39,14 @@ namespace ProtOS {
         nlohmann::json screenInfo = m_Config[name];
 
         // Clear out the m_Screens
-        for(auto& screen : m_Screens) delete screen;
         m_Screens.clear();
 
         // Load screen type and push into m_Screen
         for(auto& info : screenInfo) {
             std::string type(info["type"]);
             if (type == "image") {
-                ScreenImage* screenImage = new ScreenImage();
-                m_Screens.push_back(screenImage);
+                std::unique_ptr<ScreenImage> screenImage = std::make_unique<ScreenImage>();
+                m_Screens.push_back(std::move(screenImage));
             } else if (type == "text") {
 
             } else {
