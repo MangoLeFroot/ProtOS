@@ -3,11 +3,8 @@
 // IO
 #include <stdio.h>
 #include <fstream>
-
+#include <map>
 #include <memory>
-
-// Delta time
-#include "Timestep.h"
 
 // Matrix library
 #include "rgbmatrix/led-matrix.h"

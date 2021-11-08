@@ -7,3 +7,9 @@
 [submodule "vendor/CImg"]
 	path = vendor/CImg
 	url = https://github.com/dtschump/CImg
+[submodule "vendor/spdlog"]
+	path = vendor/spdlog
+	url = https://github.com/gabime/spdlog
+[submodule "vendor/optick"]
+	path = vendor/optick
+	url = https://github.com/bombomby/optick
