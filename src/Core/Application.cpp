@@ -16,6 +16,10 @@ namespace ProtOS
     Application* Application::s_Instance = nullptr;
 
     Application::Application() {
+      Log::Init();
+      Log::AddLogger("ProtOS");
+      PROTOS_LOG_INFO("ProtOS", "Initialized Log!");
+
       // Configure and initialize the matrices.
       RGBMatrix::Options options;
       RuntimeOptions runtime_opt;
@@ -30,18 +34,17 @@ namespace ProtOS
       m_Matrix = RGBMatrix::CreateFromOptions(options, runtime_opt);
       assert(m_Matrix);
 
+      m_Canvas = m_Matrix->CreateFrameCanvas();
+
       m_Face = new Screen();
       assert(m_Face->LoadConfig("./config/booting.json"));
 
       m_Face->SetScreenInfo("booting");
-
-      Log::Init();
-      Log::AddLogger("ProtOS");
-      PROTOS_LOG_INFO("ProtOS", "Initialized Log!");
     }
 
     Application::~Application() {
-
+        m_Matrix->Clear();
+        delete m_Matrix;
     }
 
     Application* Application::GetInstance() {
@@ -69,12 +72,13 @@ namespace ProtOS
         Timestep timestep = time - m_LastFrameTime;
         m_LastFrameTime = time;
 
-        //std::fprintf(stderr, "FPS: %d\n", (int)(CLOCKS_PER_SEC / timestep.GetSeconds()));
+        std::fprintf(stderr, "FPS: %d\n", (int)(CLOCKS_PER_SEC / timestep.GetSeconds()));
 
         m_Face->OnUpdate(timestep);
     }
 
     void Application::OnDraw() {
-        m_Face->OnDraw(m_Matrix);
+        m_Face->OnDraw(m_Canvas);
+        m_Canvas = m_Matrix->SwapOnVSync(m_Canvas);
     }
 }

@@ -14,6 +14,6 @@ namespace ProtOS {
         logger->set_level(spdlog::level::trace);
         s_LoggerMap->insert(std::make_pair(name, logger));
 
-        PROTOS_LOG_INFO("ProtOS", "Logger registered: {0}", name);
+        PROTOS_LOG_TRACE("ProtOS", "Logger registered: {0}", name);
     }
 }

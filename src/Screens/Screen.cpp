@@ -1,7 +1,7 @@
-#include "../PCH.h"
+#include "PCH.h"
 #include "Screen.h"
 
-#include "ScreenType/ScreenImage.h"
+#include "Screens/ScreenType/ScreenImage.h"
 
 namespace ProtOS {
     Screen::Screen() {
@@ -19,9 +19,9 @@ namespace ProtOS {
         }
     }
 
-    void Screen::OnDraw(rgb_matrix::RGBMatrix* matrix) {
+    void Screen::OnDraw(rgb_matrix::FrameCanvas* canvas) {
         for (auto& screen : m_Screens) {
-            screen->OnDraw(matrix);
+            screen->OnDraw(canvas);
         }
     }
 
@@ -45,7 +45,7 @@ namespace ProtOS {
         for(auto& info : screenInfo) {
             std::string type(info["type"]);
             if (type == "image") {
-                std::unique_ptr<ScreenImage> screenImage = std::make_unique<ScreenImage>();
+                std::unique_ptr<ScreenImage> screenImage = std::make_unique<ScreenImage>(info);
                 m_Screens.push_back(std::move(screenImage));
             } else if (type == "text") {
 

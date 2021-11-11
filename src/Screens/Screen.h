@@ -12,7 +12,7 @@ namespace ProtOS {
         ~Screen();
 
         void OnUpdate(Timestep ts);
-        void OnDraw(rgb_matrix::RGBMatrix* matrix);
+        void OnDraw(rgb_matrix::FrameCanvas* canvas);
 
         bool LoadConfig(const std::string& name);
         void SetScreenInfo(const std::string& name);

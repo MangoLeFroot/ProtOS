@@ -11,6 +11,6 @@ namespace ProtOS {
     public:
         virtual ~IScreenType() {}
         virtual void OnUpdate(Timestep ts) = 0;
-        virtual void OnDraw(rgb_matrix::RGBMatrix* matrix) = 0;
+        virtual void OnDraw(rgb_matrix::FrameCanvas* canvas) = 0;
     };
 }

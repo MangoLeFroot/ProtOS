@@ -1,6 +1,6 @@
 #pragma once
-#include "../PCH.h"
-#include "../Screens/Screen.h"
+#include "PCH.h"
+#include "Screens/Screen.h"
 
 namespace ProtOS {
     class Application {
@@ -15,6 +15,7 @@ namespace ProtOS {
         static Application* s_Instance;
 
         rgb_matrix::RGBMatrix* m_Matrix;
+        rgb_matrix::FrameCanvas* m_Canvas;
 
         Screen* m_Face;
 
