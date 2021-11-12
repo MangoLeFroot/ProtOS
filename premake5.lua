@@ -27,11 +27,6 @@ project "ProtOS"
         "%{prj.name}/src/**.c",
         "%{prj.name}/src/**.hpp",
         "%{prj.name}/src/**.cpp",
-
-        "%{prj.name}/vendor/rpi-rgb-led-matrix/include/**.h",
-        "%{prj.name}/vendor/rpi-rgb-led-matrix/lib/**.h",
-        "%{prj.name}/vendor/rpi-rgb-led-matrix/lib/**.c",
-        "%{prj.name}/vendor/rpi-rgb-led-matrix/lib/**.cc",
    }
 
 	includedirs
@@ -46,6 +41,7 @@ project "ProtOS"
 
 	links
 	{
+	    "RGBMatrix",
 	    "pthread",
 	    "X11"
 	}
@@ -61,3 +57,27 @@ project "ProtOS"
    filter "configurations:Release"
       defines { "DEBUG" }
       optimize "On"
+
+project "RGBMatrix"
+	kind "StaticLib"
+	language "C++"
+	cppdialect "C++17"
+
+	targetdir ("bin/%{prj.name}")
+	objdir ("bin/obj")
+
+    files
+    {
+        "ProtOS/vendor/rpi-rgb-led-matrix/include/**.h",
+        "ProtOS/vendor/rpi-rgb-led-matrix/lib/**.h",
+        "ProtOS/vendor/rpi-rgb-led-matrix/lib/**.c",
+        "ProtOS/vendor/rpi-rgb-led-matrix/lib/**.cc",
+    }
+
+	includedirs
+	{
+		"ProtOS/vendor/rpi-rgb-led-matrix/include",
+    }
+
+    defines { "DEBUG" }
+    optimize "On"
