@@ -30,6 +30,7 @@ namespace ProtOS
       options.chain_length = 2;
       options.parallel = 1;
       options.led_rgb_sequence = "BRG";
+      options.show_refresh_rate = true;
 
       m_Matrix = RGBMatrix::CreateFromOptions(options, runtime_opt);
       assert(m_Matrix);
@@ -72,7 +73,7 @@ namespace ProtOS
         Timestep timestep = time - m_LastFrameTime;
         m_LastFrameTime = time;
 
-        std::fprintf(stderr, "FPS: %d\n", (int)(CLOCKS_PER_SEC / timestep.GetSeconds()));
+        //std::fprintf(stderr, "FPS: %d\n", (int)(CLOCKS_PER_SEC / timestep.GetSeconds()));
 
         m_Face->OnUpdate(timestep);
     }

@@ -1,5 +1,5 @@
-*.bak
+*.cmake
+CMakeLists.txt
+cmake-build-debug/
 build/
 bin/
-lib/
-include/

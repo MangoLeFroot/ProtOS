@@ -7,8 +7,8 @@
 #include <memory>
 
 // Matrix library
-#include "rgbmatrix/led-matrix.h"
-#include "rgbmatrix/graphics.h"
+#include "led-matrix.h"
+#include "graphics.h"
 
 // JSON
 #include "nlohmann/json.hpp"
