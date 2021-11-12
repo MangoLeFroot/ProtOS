@@ -1,15 +1,21 @@
-[submodule "vendor/rpi-rgb-led-matrix"]
-	path = vendor/rpi-rgb-led-matrix
+[submodule "ProtOS/vendor/rpi-rgb-led-matrix"]
+	path = ProtOS/vendor/rpi-rgb-led-matrix
 	url = https://github.com/hzeller/rpi-rgb-led-matrix
-[submodule "vendor/json"]
-	path = vendor/json
+[submodule "ProtOS/vendor/json"]
+	path = ProtOS/vendor/json
 	url = https://github.com/nlohmann/json
-[submodule "vendor/CImg"]
-	path = vendor/CImg
+[submodule "ProtOS/vendor/CImg"]
+	path = ProtOS/vendor/CImg
 	url = https://github.com/dtschump/CImg
-[submodule "vendor/spdlog"]
-	path = vendor/spdlog
+[submodule "ProtOS/vendor/spdlog"]
+	path = ProtOS/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-[submodule "vendor/optick"]
-	path = vendor/optick
+[submodule "ProtOS/vendor/optick"]
+	path = ProtOS/vendor/optick
 	url = https://github.com/bombomby/optick
+[submodule "ProtOS/vendor/premake5/cmake"]
+	path = ProtOS/vendor/premake5/cmake
+	url = https://github.com/Enhex/premake-cmake
+[submodule "ProtOS/vendor/premake5/clion"]
+	path = ProtOS/vendor/premake5/clion
+	url = https://github.com/Enhex/premake-clion
