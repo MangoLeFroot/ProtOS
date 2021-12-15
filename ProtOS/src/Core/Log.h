@@ -21,4 +21,4 @@ namespace ProtOS {
 #define PROTOS_LOG_INFO(NAME, ...)  ProtOS::Log::GetLogger(NAME)->info(__VA_ARGS__)
 #define PROTOS_LOG_WARN(NAME, ...)  ProtOS::Log::GetLogger(NAME)->warn(__VA_ARGS__)
 #define PROTOS_LOG_ERROR(NAME, ...) ProtOS::Log::GetLogger(NAME)->error(__VA_ARGS__)
-#define PROTOS_LOG_FATAL(NAME, ...) ProtOS::Log::GetLogger(NAME)->fatal(__VA_ARGS__)
+#define PROTOS_LOG_FATAL(NAME, ...) ProtOS::Log::GetLogger(NAME)->critical(__VA_ARGS__)

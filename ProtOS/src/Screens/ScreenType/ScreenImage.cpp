@@ -1,33 +1,96 @@
 #include "ScreenImage.h"
 
+
 //Logging
 #include "Core/Log.h"
 
-using namespace cimg_library;
-
 namespace ProtOS {
-    ScreenImage::ScreenImage(const nlohmann::basic_json<>& config) {
-	PROTOS_LOG_TRACE("ProtOS", "Loaded image from path: {0}", config["path"]);
-        m_Image = new CImg<uint8_t>(std::string(config["path"]).c_str());
+    ScreenImage::ScreenImage(nlohmann::basic_json<>& config)
+                    : m_Config(config) {
+    	PROTOS_LOG_TRACE("ProtOS", "Loaded image from path: {0}", m_Config["path"]);
+
+        std::vector<Magick::Image> frames;
+
+        try {
+            readImages(&frames, m_Config["path"]);
+        } catch (std::exception& e) {
+            if (e.what()) PROTOS_LOG_ERROR("ProtOS", "Error while loading image: {1}", m_Config["path"], e.what());
+            return;
+        }
+
+        if(frames.size() == 0) {
+            PROTOS_LOG_ERROR("ProtOS", "No image loaded.");
+            return;
+        }
+
+        // Put together the animation from single frames. GIFs can have nasty
+        // disposal modes, but they are handled nicely by coalesceImages()
+        if(frames.size() > 1) Magick::coalesceImages(&m_Images, frames.begin(), frames.end());
+        else m_Images.push_back(frames[0]);
+
+        m_bHasAlpha = HasAlpha(m_Images[0]);
     }
 
     ScreenImage::~ScreenImage() {
-        if(m_Image)
-            delete m_Image;
+        m_Images.clear();
     }
 
     void ScreenImage::OnUpdate(Timestep ts) {
+        m_fLastFrameTime += ts.GetMilliseconds();
+        int delay = m_Images[m_nFrame].animationDelay() * 10; // Convert to milliseconds.
 
+        if(m_fLastFrameTime >= delay) {
+            m_fLastFrameTime -= (float)delay;
+            m_nFrame++;
+        }
+
+        if(m_nFrame >= m_Images.size()) m_nFrame = 0;
     }
 
     void ScreenImage::OnDraw(rgb_matrix::FrameCanvas* canvas) {
-	for(int x = 0; x < m_Image->width(); x++) {
-		for(int y = 0; y < m_Image->height(); y++) {
-			canvas->SetPixel(x, y, *m_Image->data(x, y, 0, 0),
-					       *m_Image->data(x, y, 0, 1),
-					       *m_Image->data(x, y, 0, 2));
-		}
-	}
-	//SetImage(canvas, 0, 0, m_Image->begin(), m_Image->size(), m_Image->width(), m_Image->height(), true); 
+        for(int y = 0; y < m_Images[m_nFrame].rows(); y++) {
+            for(int x = 0; x < m_Images[m_nFrame].columns(); x++) {
+                //canvas->drawImage(m_Images[m_nFrame].data);
+                //canvas->Deserialize(reinterpret_cast<const char*>(m_Images[m_nFrame].data()), m_Images[m_nFrame].length());
+                //SetImage(canvas, (int)(m_Config["position"]["x"]), (int)(m_Config["position"]["y"]), reinterpret_cast<uint8_t*>(const_cast<void*>(m_Images[m_nFrame].data())), m_Images[m_nFrame].length(), m_nWidth, m_nHeight, false);
+
+                const Magick::Color &c = m_Images[m_nFrame].pixelColor(x, y);
+
+                if(!m_bHasAlpha || c.alphaQuantum() < MaxRGB) {
+                    canvas->SetPixel((int) (m_Config["position"]["x"]) + x, (int) (m_Config["position"]["y"]) + y,
+                                     ScaleQuantumToChar(c.redQuantum()),
+                                     ScaleQuantumToChar(c.greenQuantum()),
+                                     ScaleQuantumToChar(c.blueQuantum()));
+                   }
+/*
+                const Magick::Color &c = m_Images[m_nFrame].pixelColor(x, y);
+                    canvas->SetPixel((int)(m_Config["position"]["x"]) + x, (int)(m_Config["position"]["y"]) + y,
+                                           MagickCore::ScaleQuantumToChar(c.quantumRed()),
+                                           MagickCore::ScaleQuantumToChar(c.quantumGreen()),
+                                           MagickCore::ScaleQuantumToChar(c.quantumBlue()));
+
+                    if(m_Config["mirrored"]) {
+                        canvas->SetPixel((int)(m_Config["position"]["x"]) + (m_Images[m_nFrame].columns() - ((x - (int)(m_Config["position"]["x"])))) + (canvas->width() - m_Images[m_nFrame].columns()),
+                                         (int)(m_Config["position"]["y"]) + y,
+                                         ScaleQuantumToChar(c.redQuantum()),
+                                         ScaleQuantumToChar(c.greenQuantum()),
+                                         ScaleQuantumToChar(c.blueQuantum()));
+                    }
+                }
+*/
+            }
+        }
+    }
+
+    bool ScreenImage::HasAlpha(const Magick::Image& image) {
+        for(int y = 0; y < m_Images[m_nFrame].rows(); y++) {
+            for (int x = 0; x < m_Images[m_nFrame].columns(); x++) {
+                const Magick::Color &c = m_Images[m_nFrame].pixelColor(x, y);
+                if(c.alphaQuantum() < MaxRGB) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

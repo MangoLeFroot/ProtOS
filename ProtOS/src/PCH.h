@@ -12,3 +12,6 @@
 
 // JSON
 #include "nlohmann/json.hpp"
+
+// Imaeg processing
+#include <Magick++.h>

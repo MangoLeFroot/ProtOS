@@ -15,6 +15,8 @@ project "ProtOS"
 	language "C++"
 	cppdialect "C++20"
 
+    buildoptions "-g -O2 -ffile-prefix-map=/build/graphicsmagick-jeuA19/graphicsmagick-1.4+really1.3.36+hg16481=. -fstack-protector-strong -Wformat -Werror=format-security -pthread"
+
 	targetdir ("bin/%{prj.name}")
 	objdir ("bin/obj")
 
@@ -41,13 +43,30 @@ project "ProtOS"
 
 	links
 	{
-	    "RGBMatrix",
-	    "pthread",
-	    "X11"
-	}
-
-	defines
-	{
+        "RGBMatrix",
+        "pthread",
+        "GraphicsMagick++",
+        "GraphicsMagick",
+        "jbig",
+        "webp",
+        "webpmux",
+        "lcms2",
+        "tiff",
+        "freetype",
+        "jpeg",
+        "png16",
+        "wmflite",
+        "Xext",
+        "SM",
+        "ICE",
+        "X11",
+        "lzma",
+        "bz2",
+        "xml2",
+        "z",
+        "zstd",
+        "m",
+        "gomp"
 	}
 
    filter "configurations:Debug"

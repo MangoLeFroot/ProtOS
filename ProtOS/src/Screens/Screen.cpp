@@ -1,6 +1,8 @@
 #include "PCH.h"
 #include "Screen.h"
 
+
+#include "Core/Log.h"
 #include "Screens/ScreenType/ScreenImage.h"
 
 namespace ProtOS {
@@ -25,14 +27,15 @@ namespace ProtOS {
         }
     }
 
-    bool Screen::LoadConfig(const std::string& name) {
+    void Screen::LoadConfig(const std::string& name) {
         std::ifstream stream(name);
-        if(!stream)
-            return false;
+        if(!stream) {
+            PROTOS_LOG_ERROR("ProtOS", "Failed to load config file: {0}", name);
+            return;
+        }
 
         stream >> m_Config;
         stream.close();
-        return true;
     }
 
     void Screen::SetScreenInfo(const std::string& name) {

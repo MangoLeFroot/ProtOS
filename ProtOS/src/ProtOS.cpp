@@ -10,7 +10,9 @@ static void InterruptHandler(int signo) {
     app->Stop();
 }
 
-int main() {
+int main(int argc, char *argv[]) {
+    Magick::InitializeMagick(*argv);
+
     // setup signal processing
     signal(SIGTERM, InterruptHandler);
     signal(SIGINT, InterruptHandler);

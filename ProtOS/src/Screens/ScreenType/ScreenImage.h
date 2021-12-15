@@ -1,6 +1,4 @@
 #pragma once
-#include <CImg.h>
-
 #include "PCH.h"
 
 // Delta time
@@ -12,14 +10,22 @@
 namespace ProtOS {
     class ScreenImage: virtual  public IScreenType {
     public:
-        ScreenImage(const nlohmann::basic_json<>& config);
+        ScreenImage(nlohmann::basic_json<>& config);
         ~ScreenImage();
 
         void OnUpdate(Timestep ts);
         void OnDraw(rgb_matrix::FrameCanvas* canvas);
 
     private:
-        int m_nFrame;
-        cimg_library::CImg<uint8_t>* m_Image;
+        nlohmann::basic_json<> m_Config;
+
+        bool m_bHasAlpha = false;
+
+        float m_fLastFrameTime = 0.0f;
+        int m_nFrame = 0;
+
+        std::vector<Magick::Image> m_Images;
+
+        bool HasAlpha(const Magick::Image& image);
     };
 }

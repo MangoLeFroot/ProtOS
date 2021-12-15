@@ -14,7 +14,7 @@ namespace ProtOS {
         void OnUpdate(Timestep ts);
         void OnDraw(rgb_matrix::FrameCanvas* canvas);
 
-        bool LoadConfig(const std::string& name);
+        void LoadConfig(const std::string& name);
         void SetScreenInfo(const std::string& name);
 
     private:
