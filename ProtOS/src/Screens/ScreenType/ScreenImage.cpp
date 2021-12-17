@@ -50,10 +50,6 @@ namespace ProtOS {
     void ScreenImage::OnDraw(rgb_matrix::FrameCanvas* canvas) {
         for(int y = 0; y < m_Images[m_nFrame].rows(); y++) {
             for(int x = 0; x < m_Images[m_nFrame].columns(); x++) {
-                //canvas->drawImage(m_Images[m_nFrame].data);
-                //canvas->Deserialize(reinterpret_cast<const char*>(m_Images[m_nFrame].data()), m_Images[m_nFrame].length());
-                //SetImage(canvas, (int)(m_Config["position"]["x"]), (int)(m_Config["position"]["y"]), reinterpret_cast<uint8_t*>(const_cast<void*>(m_Images[m_nFrame].data())), m_Images[m_nFrame].length(), m_nWidth, m_nHeight, false);
-
                 const Magick::Color &c = m_Images[m_nFrame].pixelColor(x, y);
 
                 if(!m_bHasAlpha || c.alphaQuantum() < MaxRGB) {
@@ -61,23 +57,17 @@ namespace ProtOS {
                                      ScaleQuantumToChar(c.redQuantum()),
                                      ScaleQuantumToChar(c.greenQuantum()),
                                      ScaleQuantumToChar(c.blueQuantum()));
-                   }
-/*
-                const Magick::Color &c = m_Images[m_nFrame].pixelColor(x, y);
-                    canvas->SetPixel((int)(m_Config["position"]["x"]) + x, (int)(m_Config["position"]["y"]) + y,
-                                           MagickCore::ScaleQuantumToChar(c.quantumRed()),
-                                           MagickCore::ScaleQuantumToChar(c.quantumGreen()),
-                                           MagickCore::ScaleQuantumToChar(c.quantumBlue()));
 
-                    if(m_Config["mirrored"]) {
-                        canvas->SetPixel((int)(m_Config["position"]["x"]) + (m_Images[m_nFrame].columns() - ((x - (int)(m_Config["position"]["x"])))) + (canvas->width() - m_Images[m_nFrame].columns()),
-                                         (int)(m_Config["position"]["y"]) + y,
+                    if (m_Config["mirrored"]) {
+                        canvas->SetPixel((int) (m_Config["position"]["x"]) +
+                                         (m_Images[m_nFrame].columns() - ((x - (int) (m_Config["position"]["x"])))) +
+                                         (canvas->width() - m_Images[m_nFrame].columns()),
+                                         (int) (m_Config["position"]["y"]) + y,
                                          ScaleQuantumToChar(c.redQuantum()),
                                          ScaleQuantumToChar(c.greenQuantum()),
                                          ScaleQuantumToChar(c.blueQuantum()));
                     }
                 }
-*/
             }
         }
     }

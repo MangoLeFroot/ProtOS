@@ -38,9 +38,9 @@ namespace ProtOS
         m_Canvas = m_Matrix->CreateFrameCanvas();
 
         m_Face = new Screen();
-        m_Face->LoadConfig("./config/faces.json");
+        m_Face->LoadConfig("./config/booting.json");
 
-        m_Face->SetScreenInfo("bounce");
+        m_Face->SetScreenInfo("booting");
 
         m_LastFrameTime = clock();
     }
