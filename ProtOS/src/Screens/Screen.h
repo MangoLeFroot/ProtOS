@@ -8,17 +8,15 @@
 namespace ProtOS {
     class Screen {
     public:
-        Screen();
+        Screen(const std::string& name);
         ~Screen();
 
         void OnUpdate(Timestep ts);
         void OnDraw(rgb_matrix::FrameCanvas* canvas);
-
-        void LoadConfig(const std::string& name);
         void SetScreenInfo(const std::string& name);
 
     private:
-        nlohmann::json m_Config;
+        std::string m_sConfigName;
         std::vector<std::unique_ptr<IScreenType>> m_Screens;
     };
 }

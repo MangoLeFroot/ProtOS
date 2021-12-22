@@ -2,11 +2,10 @@
 
 #include <ctime>
 
-// Delta time
-#include "Timestep.h"
+#include "Core/Config.h"
+#include "Core/Log.h"
+#include "Core/Timestep.h"
 
-// Logging
-#include "Log.h"
 
 using namespace rgb_matrix;
 
@@ -15,6 +14,7 @@ namespace ProtOS
     Application* Application::s_Instance = nullptr;
 
     Application::Application() {
+#ifdef USE_MATRIX
         // Configure and initialize the matrices.
         RGBMatrix::Options options;
         RuntimeOptions runtime_opt;
@@ -32,10 +32,11 @@ namespace ProtOS
         if(!m_Matrix) PROTOS_LOG_FATAL("ProtOS", "Failed to initialize matrix.");
 
         m_Canvas = m_Matrix->CreateFrameCanvas();
+#endif
 
-        m_Face = new Screen();
-        m_Face->LoadConfig("./config/booting.json");
+        Config::GetInstance()->Load("face", "./config/booting.json");
 
+        m_Face = new Screen("face");
         m_Face->SetScreenInfo("booting");
 
         m_LastFrameTime = clock();
@@ -77,7 +78,9 @@ namespace ProtOS
     }
 
     void Application::OnDraw() {
+#ifdef USE_MATRIX
         m_Face->OnDraw(m_Canvas);
         m_Canvas = m_Matrix->SwapOnVSync(m_Canvas);
+#endif
     }
 }

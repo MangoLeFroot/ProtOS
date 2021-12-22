@@ -12,6 +12,7 @@ Application* app = nullptr;
 std::atomic_bool server_should_continue(true);
 
 static void InterruptHandler(int signo) {
+    PROTOS_LOG_INFO("ProtOS", "Stopping...");
     app->Stop();
 }
 

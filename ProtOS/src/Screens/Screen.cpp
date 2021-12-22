@@ -1,12 +1,14 @@
-#include "PCH.h"
 #include "Screen.h"
 
+#include "PCH.h"
 
+#include "Core/Config.h"
 #include "Core/Log.h"
 #include "Screens/ScreenType/ScreenImage.h"
 
 namespace ProtOS {
-    Screen::Screen() {
+    Screen::Screen(const std::string& name)
+            : m_sConfigName(name) {
 
     }
     
@@ -27,19 +29,8 @@ namespace ProtOS {
         }
     }
 
-    void Screen::LoadConfig(const std::string& name) {
-        std::ifstream stream(name);
-        if(!stream) {
-            PROTOS_LOG_ERROR("ProtOS", "Failed to load config file: {0}", name);
-            return;
-        }
-
-        stream >> m_Config;
-        stream.close();
-    }
-
     void Screen::SetScreenInfo(const std::string& name) {
-        nlohmann::json screenInfo = m_Config[name];
+        nlohmann::json screenInfo = (*Config::GetInstance())[m_sConfigName][name];
 
         // Clear out the m_Screens
         m_Screens.clear();

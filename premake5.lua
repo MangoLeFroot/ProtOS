@@ -70,7 +70,7 @@ project "ProtOS"
 	}
 
 	defines {
-	    "OATPP_SWAGGER_RES_PATH=\"${oatpp-swagger_INCLUDE_DIRS}/../bin/oatpp-swagger/res\""
+	    "OATPP_SWAGGER_RES_PATH=\"${oatpp-swagger_INCLUDE_DIRS}/../bin/oatpp-swagger/res\"",
 	}
 
    filter "configurations:Debug"
