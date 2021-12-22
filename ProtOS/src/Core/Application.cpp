@@ -15,10 +15,6 @@ namespace ProtOS
     Application* Application::s_Instance = nullptr;
 
     Application::Application() {
-        Log::Init();
-        Log::AddLogger("ProtOS");
-        PROTOS_LOG_INFO("ProtOS", "Initialized Log!");
-
         // Configure and initialize the matrices.
         RGBMatrix::Options options;
         RuntimeOptions runtime_opt;

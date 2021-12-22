@@ -13,7 +13,7 @@ workspace "ProtOS"
 project "ProtOS"
 	kind "ConsoleApp"
 	language "C++"
-	cppdialect "C++20"
+	cppdialect "C++17"
 
     buildoptions "-g -O2 -ffile-prefix-map=/build/graphicsmagick-jeuA19/graphicsmagick-1.4+really1.3.36+hg16481=. -fstack-protector-strong -Wformat -Werror=format-security -pthread"
 
@@ -34,8 +34,6 @@ project "ProtOS"
 	includedirs
 	{
 		"%{prj.name}/src",
-
-		"%{prj.name}/vendor/CImg",
 		"%{prj.name}/vendor/json/single_include",
 		"%{prj.name}/vendor/rpi-rgb-led-matrix/include",
 		"%{prj.name}/vendor/spdlog/include",
@@ -66,7 +64,13 @@ project "ProtOS"
         "z",
         "zstd",
         "m",
-        "gomp"
+        "gomp",
+        "oatpp::oatpp",
+        "oatpp::oatpp-swagger"
+	}
+
+	defines {
+	    "OATPP_SWAGGER_RES_PATH=\"${oatpp-swagger_INCLUDE_DIRS}/../bin/oatpp-swagger/res\""
 	}
 
    filter "configurations:Debug"
