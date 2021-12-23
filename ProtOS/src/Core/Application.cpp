@@ -13,7 +13,8 @@ namespace ProtOS
 {
     Application* Application::s_Instance = nullptr;
 
-    Application::Application() {
+    Application::Application()
+            : m_Running(false){
 #ifdef USE_MATRIX
         // Configure and initialize the matrices.
         RGBMatrix::Options options;
@@ -34,7 +35,7 @@ namespace ProtOS
         m_Canvas = m_Matrix->CreateFrameCanvas();
 #endif
 
-        Config::GetInstance()->Load("face", "./config/booting.json");
+        Config::GetInstance()->Load("face", "./config/faces.json");
 
         m_Face = new Screen("face");
         m_Face->SetScreenInfo("booting");
@@ -68,7 +69,7 @@ namespace ProtOS
     }
 
     void Application::OnUpdate() {
-        float time = clock();
+        long time = clock();
         Timestep timestep = (time - m_LastFrameTime) / CLOCKS_PER_SEC;
         m_LastFrameTime = time;
 

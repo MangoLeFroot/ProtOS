@@ -1,4 +1,4 @@
-#include "ScreenImage.h"
+#include "Image.h"
 
 
 //Logging
@@ -18,7 +18,7 @@ namespace ProtOS {
             return;
         }
 
-        if(frames.size() == 0) {
+        if(frames.empty()) {
             PROTOS_LOG_ERROR("ProtOS", "No image loaded.");
             return;
         }

@@ -3,8 +3,8 @@
 #include "PCH.h"
 
 #include "Core/Config.h"
-#include "Core/Log.h"
-#include "Screens/ScreenType/ScreenImage.h"
+#include "Screens/ScreenType/Image.h"
+#include "Screens/ScreenType/Text.h"
 
 namespace ProtOS {
     Screen::Screen(const std::string& name)
@@ -42,7 +42,8 @@ namespace ProtOS {
                 std::unique_ptr<ScreenImage> screenImage = std::make_unique<ScreenImage>(info);
                 m_Screens.push_back(std::move(screenImage));
             } else if (type == "text") {
-
+                std::unique_ptr<ScreenText> screenText = std::make_unique<ScreenText>(info);
+                m_Screens.push_back(std::move(screenText));
             } else {
 
             }

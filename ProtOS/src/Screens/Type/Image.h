@@ -1,11 +1,8 @@
 #pragma once
 #include "PCH.h"
 
-// Delta time
 #include "Core/Timestep.h"
-
-
-#include "IScreenType.h"
+#include "Screens/ScreenType/IType.h"
 
 namespace ProtOS {
     class ScreenImage: virtual  public IScreenType {
@@ -13,8 +10,8 @@ namespace ProtOS {
         ScreenImage(nlohmann::basic_json<>& config);
         ~ScreenImage();
 
-        void OnUpdate(Timestep ts);
-        void OnDraw(rgb_matrix::FrameCanvas* canvas);
+        void OnUpdate(Timestep ts) override;
+        void OnDraw(rgb_matrix::FrameCanvas* canvas) override;
 
     private:
         nlohmann::basic_json<> m_Config;

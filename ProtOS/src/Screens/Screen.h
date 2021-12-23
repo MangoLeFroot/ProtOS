@@ -1,9 +1,7 @@
 #pragma once
 
-#include "ScreenType/IScreenType.h"
-
-// Delta time
-#include "../Core/Timestep.h"
+#include "Core/Timestep.h"
+#include "ScreenType/IType.h"
 
 namespace ProtOS {
     class Screen {

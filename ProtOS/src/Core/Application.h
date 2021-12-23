@@ -20,7 +20,7 @@ namespace ProtOS {
         Screen* m_Face;
 
         bool m_Running;
-        float m_LastFrameTime;
+        long m_LastFrameTime;
 
         Application();
         void OnUpdate();
